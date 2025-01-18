@@ -15,35 +15,35 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> userServiceRoute(){
         return GatewayRouterFunctions.route("user-service")
-                .route(RequestPredicates.path("/api/v1/users/**"), HandlerFunctions.http("http://localhost:8081"))
+                .route(RequestPredicates.path("/api/v1/users/**"), HandlerFunctions.http("http://user-service:8080"))
                 .build();
     }
 
     @Bean
     public RouterFunction<ServerResponse> userProfileServiceRoute(){
         return GatewayRouterFunctions.route("user-profile-service")
-                .route(RequestPredicates.path("/api/v1/profiles/**"), HandlerFunctions.http("http://localhost:8082"))
+                .route(RequestPredicates.path("/api/v1/profiles/**"), HandlerFunctions.http("http://user-profile-service:8082"))
                 .build();
     }
 
     @Bean
     public RouterFunction<ServerResponse> kycServiceRoute(){
         return GatewayRouterFunctions.route("kyc-service")
-                .route(RequestPredicates.path("/api/v1/kyc/**"), HandlerFunctions.http("http://localhost:8084"))
+                .route(RequestPredicates.path("/api/v1/kyc/**"), HandlerFunctions.http("http://kyc-service:8084"))
                 .build();
     }
 
     @Bean
     public RouterFunction<ServerResponse> PredictionServiceRoute() {
         return GatewayRouterFunctions.route("prediction-service")
-                .route(RequestPredicates.path("/api/v1/prediction/**"), HandlerFunctions.http("http://localhost:8085"))
+                .route(RequestPredicates.path("/api/v1/prediction/**"), HandlerFunctions.http("http://prediction-service:8085"))
                 .build();
     }
 
     @Bean
     public RouterFunction<ServerResponse> discoveryServerRoute() {
         return GatewayRouterFunctions.route("discovery-server")
-                .route(RequestPredicates.path("/"), HandlerFunctions.http("http://localhost:8761"))
+                .route(RequestPredicates.path("/"), HandlerFunctions.http("http://discovery-server:8761"))
                 .build();
     }
 }
