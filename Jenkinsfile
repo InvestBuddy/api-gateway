@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven 'maven_3_9_9' //  Replace with the actual name if it's different
-        jdk 'jdk_21'        // Replace with the actual name if it's different
+        maven 'Maven_3.9.9' //  Replace with the actual name if it's different
+        jdk 'JDK_21'        // Replace with the actual name if it's different
     }
 
     environment {
