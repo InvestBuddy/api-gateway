@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway-service
+  template:
+    metadata:
+      labels:
+        app: api-gateway-service
+    spec:
+      containers:
+        - name: api-gateway-service
+          image: abakhar217/api-gateway-service:api-gateway-service-<BUILD_NUMBER>
+          ports:
+            - containerPort: 8090
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "api-gateway-service"
+            - name: SPRING.MAIN.WEB-APPLICATION-TYPE
+              value: "reactive"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "kubernetes"
+            - name: SERVER_PORT
+              value: "8090"
+            - name: eureka.client.serviceUrl.defaultZone
+              value: "http://discovery-server:8761/eureka"
+            - name: eureka.client.registerWithEureka
+              value: "true"
+            - name:  eureka.client.fetchRegistry   # Enable registry fetching
+              value: "true"
+      initContainers:
+      - name: init-mydb
+        image: busybox
+        command: ['sh', '-c', 'until nslookup discovery-server.default.svc.cluster.local; do echo waiting for Eureka; sleep 2; done;']
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-service
+spec:
+  selector:
+    app: api-gateway-service
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 8090
+  type: ClusterIP
