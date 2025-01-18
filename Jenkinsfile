@@ -23,7 +23,7 @@ pipeline {
         stage('Build JAR') {
            steps {
                 script {
-                    withEnv(["JAVA_HOME": "${tool 'jdk_21'}", "PATH+MAVEN": "${tool 'maven_3_9_9'}/bin"]) {
+                    withEnv(["JAVA_HOME": "${tool 'JDK_21'}", "PATH+MAVEN": "${tool 'Maven_3.9.9'}/bin"]) {
                         // Run mvn clean package to build the application
                        bat 'mvn clean package -Dmaven.test.failure.ignore=true'
                     }
